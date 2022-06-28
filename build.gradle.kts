@@ -14,7 +14,8 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("io.strikt:strikt-core:0.34.0")
+    implementation("io.strikt:strikt-core:0.34.1")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks.test {
@@ -23,8 +24,4 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
-}
-
-application {
-    mainClass.set("MainKt")
 }
