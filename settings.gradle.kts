@@ -1,3 +1,3 @@
 
-rootProject.name = "givenWhenThenWhere"
+rootProject.name = "givenWhenThen"
 
