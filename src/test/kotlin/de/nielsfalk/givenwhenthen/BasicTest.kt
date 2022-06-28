@@ -5,7 +5,7 @@ import strikt.assertions.isEqualTo
 
 class DemoTest : GivenWhenThenTest(
     scenario(
-        description = "a Calculator sqrt 2",
+        description { "a Calculator sqrt 2" },
 
         given { Calculator() },
         `when` { calculator ->

@@ -13,26 +13,36 @@ class Scenario<Given, Actual, DataType>(
         where.map { row ->
             val dataContext = DataContext(row)
             dataContext.description(row) to {
-                runBlocking {
-                    val givenValue = dataContext
-                        .given()
-                    val actual = WhenContext(givenValue, row)
-                        .`when`(givenValue)
-                    ThenContext(givenValue, actual, row)
-                        .then(actual)
+                var whenContext: WhenContext<*, *>? = null
+                var thenContext: ThenContext<*, *, *>? = null
+
+                try {
+                    runBlocking {
+                        val givenValue = dataContext.given()
+                        whenContext = WhenContext(givenValue, row).apply {
+                            val actual = `when`(givenValue)
+                            thenContext = ThenContext(givenValue, actual, row).apply {
+                                then(actual)
+                            }
+                        }
+                    }
+                } finally {
+                    thenContext?.close()
+                    whenContext?.close()
+                    dataContext.close()
                 }
             }
         }
 }
 
 fun <Given, Actual> scenario(
-    description: String = "",
+    description: DescriptionFun<Unit> = { "" },
     given: GivenFun<Given, Unit>,
     `when`: WhenFun<Given, Actual, Unit>,
     then: ThenFun<Given, Actual, Unit>,
 ): List<Pair<String, () -> Unit>> =
     Scenario(
-        description { description },
+        description,
         given,
         `when`,
         then,
