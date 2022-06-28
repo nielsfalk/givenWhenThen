@@ -3,11 +3,6 @@ package de.nielsfalk.givenwhenthenwhere
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 
-class Calculator {
-    fun sqrt(aNumber: Int) = aNumber * aNumber
-    fun sum(first: Int, second: Int) = first + second
-}
-
 class DemoTest : GivenWhenThenWhereTest(
     scenario(
         description = "a Calculator sqrt 2",
@@ -58,14 +53,14 @@ class DemoTest : GivenWhenThenWhereTest(
     scenario(
         description { "even shorter notation with given + when together in expect" },
         expect {
-            expectThat(3 + 7).isEqualTo(10)
+            that(3 + 7).isEqualTo(10)
         }
     ),
 
     scenario(
         description { "even shorter notation with given + when together in expect block but with where - sum of $it should be ${it.first + it.second}" },
         expect {
-            expectThat(data.run { first + second }).isEqualTo(10)
+            that(data.run { first + second }).isEqualTo(10)
         },
         where(
             3 to 7,
@@ -74,3 +69,8 @@ class DemoTest : GivenWhenThenWhereTest(
         )
     )
 )
+
+class Calculator {
+    fun sqrt(aNumber: Int) = aNumber * aNumber
+    fun sum(first: Int, second: Int) = first + second
+}
