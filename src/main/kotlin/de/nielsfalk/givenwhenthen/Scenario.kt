@@ -1,7 +1,6 @@
 package de.nielsfalk.givenwhenthen
 
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.DynamicTest
 
 class Scenario<Given, Actual, DataType>(
     val description: DescriptionFun<DataType>,
@@ -10,11 +9,11 @@ class Scenario<Given, Actual, DataType>(
     val then: ThenFun<Given, Actual, DataType>,
     val where: Array<out DataType>
 ) {
-    fun dynamicTest(): List<DynamicTest> =
+    fun dynamicTest(): List<Pair<String, () -> Unit>> =
         where.map { row ->
             val dataContext = DataContext(row)
-            DynamicTest.dynamicTest(dataContext.description(row)) {
-                runBlocking{
+            dataContext.description(row) to {
+                runBlocking {
                     val givenValue = dataContext
                         .given()
                     val actual = WhenContext(givenValue, row)
@@ -31,7 +30,7 @@ fun <Given, Actual> scenario(
     given: GivenFun<Given, Unit>,
     `when`: WhenFun<Given, Actual, Unit>,
     then: ThenFun<Given, Actual, Unit>,
-): List<DynamicTest> =
+): List<Pair<String, () -> Unit>> =
     Scenario(
         description { description },
         given,
@@ -47,7 +46,7 @@ fun <Given, Actual, DataType> scenario(
     `when`: WhenFun<Given, Actual, DataType>,
     then: ThenFun<Given, Actual, DataType>,
     where: Array<out DataType>
-): List<DynamicTest> =
+): List<Pair<String, () -> Unit>> =
     Scenario(description, given, `when`, then, where)
         .dynamicTest()
 
@@ -55,7 +54,7 @@ fun <Actual> scenario(
     description: DescriptionFun<Unit> = { "" },
     `when`: WhenFun<Unit, Actual, Unit>,
     then: ThenFun<Unit, Actual, Unit>,
-): List<DynamicTest> =
+): List<Pair<String, () -> Unit>> =
     Scenario(description, { }, `when`, then, arrayOf(Unit))
         .dynamicTest()
 
@@ -64,14 +63,14 @@ fun <Actual, DataType> scenario(
     `when`: WhenFun<Unit, Actual, DataType>,
     then: ThenFun<Unit, Actual, DataType>,
     where: Array<out DataType>
-): List<DynamicTest> =
+): List<Pair<String, () -> Unit>> =
     Scenario(description, { }, `when`, then, where)
         .dynamicTest()
 
 fun scenario(
-    description: DescriptionFun<Unit> = { "" },
+    description: DescriptionFun<Unit> = { "a test" },
     expect: ExpectFun<Unit>
-): List<DynamicTest> =
+): List<Pair<String, () -> Unit>> =
     Scenario(description, { }, { }, { DataContext(data).expect(data) }, arrayOf(Unit))
         .dynamicTest()
 
@@ -79,7 +78,7 @@ fun <DataType> scenario(
     description: DescriptionFun<DataType> = { "" },
     expect: ExpectFun<DataType>,
     where: Array<out DataType>
-): List<DynamicTest> =
+): List<Pair<String, () -> Unit>> =
     Scenario(description, { }, { }, { DataContext(data).expect(data) }, where)
         .dynamicTest()
 
