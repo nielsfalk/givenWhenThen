@@ -1,5 +1,6 @@
 package de.nielsfalk.givenwhenthenwhere
 
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.DynamicTest
 
 class Scenario<Given, Actual, DataType>(
@@ -13,12 +14,14 @@ class Scenario<Given, Actual, DataType>(
         where.map { row ->
             val dataContext = DataContext(row)
             DynamicTest.dynamicTest(dataContext.description(row)) {
-                val givenValue = dataContext
-                    .given()
-                val actual = WhenContext(givenValue, row)
-                    .`when`(givenValue)
-                ThenContext(givenValue, actual, row)
-                    .then(actual)
+                runBlocking{
+                    val givenValue = dataContext
+                        .given()
+                    val actual = WhenContext(givenValue, row)
+                        .`when`(givenValue)
+                    ThenContext(givenValue, actual, row)
+                        .then(actual)
+                }
             }
         }
 }

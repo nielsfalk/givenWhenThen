@@ -16,6 +16,7 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation("io.strikt:strikt-core:0.34.1")
     implementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
 }
 
 tasks.test {
