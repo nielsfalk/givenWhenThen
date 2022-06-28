@@ -1,9 +1,9 @@
-package de.nielsfalk.givenwhenthenwhere
+package de.nielsfalk.givenwhenthen
 
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 
-class DemoTest : GivenWhenThenWhereTest(
+class DemoTest : GivenWhenThenTest(
     scenario(
         description = "a Calculator sqrt 2",
 

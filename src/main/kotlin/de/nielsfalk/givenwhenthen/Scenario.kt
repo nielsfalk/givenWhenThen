@@ -1,4 +1,4 @@
-package de.nielsfalk.givenwhenthenwhere
+package de.nielsfalk.givenwhenthen
 
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.DynamicTest

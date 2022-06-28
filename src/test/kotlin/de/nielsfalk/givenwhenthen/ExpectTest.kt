@@ -1,8 +1,8 @@
-package de.nielsfalk.givenwhenthenwhere
+package de.nielsfalk.givenwhenthen
 
 import strikt.assertions.isEqualTo
 
-class ExpectTest : GivenWhenThenWhereTest(
+class ExpectTest : GivenWhenThenTest(
     scenario(
         description { "given + when together in expect" },
 

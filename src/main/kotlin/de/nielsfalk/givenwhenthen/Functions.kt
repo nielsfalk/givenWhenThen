@@ -1,4 +1,4 @@
-package de.nielsfalk.givenwhenthenwhere
+package de.nielsfalk.givenwhenthen
 
 typealias DescriptionFun<DataType> = DataContext<DataType>.(DataType) -> String
 typealias GivenFun<Given, DataType> = suspend DataContext<DataType>.() -> Given

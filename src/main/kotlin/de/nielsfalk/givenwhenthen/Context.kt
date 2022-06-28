@@ -1,4 +1,4 @@
-package de.nielsfalk.givenwhenthenwhere
+package de.nielsfalk.givenwhenthen
 
 import strikt.api.ExpectationBuilder
 
