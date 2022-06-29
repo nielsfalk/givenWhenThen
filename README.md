@@ -1,5 +1,5 @@
 # GivenWhenThen
-
+![example workflow](https://github.com/nielsfalk/givenWhenThen/actions/workflows/gradle.yml/badge.svg)
 [![](https://jitpack.io/v/nielsfalk/givenWhenThen.svg)](https://jitpack.io/#nielsfalk/givenWhenThen)
 
 
