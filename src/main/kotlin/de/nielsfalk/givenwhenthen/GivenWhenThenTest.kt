@@ -3,17 +3,18 @@ package de.nielsfalk.givenwhenthen
 import org.junit.jupiter.api.*
 
 abstract class GivenWhenThenTest(
-    private vararg val scenario: List<TestExecutable<*>>,
-    private val beforeEach: (AutoCloseBlock.() -> Unit)? = null,
-    private val afterEach: (() -> Unit)? = null,
-    private val beforeAll: (AutoCloseBlock.() -> Unit)? = null,
-    private val afterAll: (() -> Unit)? = null,
+    vararg scenario: List<TestExecutable<*>>,
+    protected val scenarios: MutableList<List<TestExecutable<*>>> = mutableListOf(*scenario),
+    protected var beforeEach: (AutoCloseBlock.() -> Unit)? = null,
+    protected var afterEach: (() -> Unit)? = null,
+    protected var beforeAll: (AutoCloseBlock.() -> Unit)? = null,
+    protected var afterAll: (() -> Unit)? = null,
 ) {
     @TestFactory
     @DisplayName("cases")
     fun givenWhenThenTests(): List<DynamicNode> {
         val beforeAllAutoClose = AutoCloseBlock()
-        val groups = scenario.flatMap { it }.groupBy { it.description }.toList()
+        val groups = scenarios.flatMap { it }.groupBy { it.description }.toList()
         return groups.flatMapIndexed { groupIndex, (name, tests) ->
             val dynamicTests = tests.mapIndexed { index, test ->
                 dynamicTest(

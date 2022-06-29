@@ -1,5 +1,8 @@
 # GivenWhenThen
 
+[![](https://jitpack.io/v/nielsfalk/givenWhenThen.svg)](https://jitpack.io/#nielsfalk/givenWhenThen)
+
+
 provides [Spock](https://spockframework.org/)syntax in [Kotlin](https://kotlinlang.org/) with [JUnit](https://junit.org/junit5/), [Strikt](https://strikt.io/)-assertions and testdata defined in markdown.
 
 
