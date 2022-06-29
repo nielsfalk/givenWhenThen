@@ -52,4 +52,39 @@ Other examples can be found [here](https://github.com/nielsfalk/givenWhenThen/tr
 ## Dsl
 
 The Dsl is inspired by [Spock](https://spockframework.org/).
-What makes [Spock](https://spockframework.org/) stand out from the crowd is its beautiful and highly expressive specification language. 
+What makes [Spock](https://spockframework.org/) stand out from the crowd is its beautiful and highly expressive specification language.
+
+
+## Get started
+
+add the folowing to your ```build.gradle.kts```
+
+```kotlin
+repositories {
+    maven { setUrl("https://jitpack.io") }
+}
+
+dependencies {
+    testImplementation("com.github.nielsfalk:givenWhenThen:0.1.0")
+    implementation("io.strikt:strikt-core:0.34.1")
+}
+```
+
+and write your first Test
+
+```kotlin
+import de.nielsfalk.givenwhenthen.*
+
+class FirstTest : GivenWhenThenTest(
+    scenario(
+        description { "first test" },
+
+        given { },
+        `when` { },
+        then { expectActual().isEqualTo(Unit) },
+        where(Unit)
+    )
+)
+```
+
+[<div align="right"><img src="KotlinMascot.png" width="50%" /></div>](KotlinMascot.png)

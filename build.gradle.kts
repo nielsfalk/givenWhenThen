@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.6.20"
     application
+    `maven-publish`
 }
 
 group = "de.nielsfalk"
@@ -26,4 +27,16 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "de.nielsfalk"
+            artifactId = "color-console"
+            version = "1.0"
+
+            from(components["java"])
+        }
+    }
 }
