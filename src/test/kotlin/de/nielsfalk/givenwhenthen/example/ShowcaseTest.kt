@@ -5,7 +5,7 @@ import strikt.assertions.isEqualTo
 
 class ShowcaseTest : GivenWhenThenTest(
     scenario(
-        description { "expect ${data.expectedWinner} to win when ${data.first} defending ${data.second}" },
+        description { "Rock Paper Scissors expectedWinner=${data.expectedWinner}" },
 
         `when` { data.first defend data.second },
         then {
@@ -34,7 +34,11 @@ private data class RockPaperScissorsTestCase(
     val first: RockPaperScissors,
     val second: RockPaperScissors,
     val expectedWinner: RockPaperScissors?
-)
+){
+    override fun toString(): String {
+        return "first=$first, second=$second, expectedWinner=$expectedWinner"
+    }
+}
 
 enum class RockPaperScissors {
     Rock, Paper, Scissors;

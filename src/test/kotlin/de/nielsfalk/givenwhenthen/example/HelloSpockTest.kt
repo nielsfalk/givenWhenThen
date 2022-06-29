@@ -9,7 +9,7 @@ import strikt.assertions.hasLength
 * */
 class HelloSpock : GivenWhenThenTest(
     scenario(
-        description { "length of Spock's and his friends' names - $data" },
+        description { "length of Spock's and his friends' names" },
 
         expect {
             val (name, expectedLength) = data
@@ -22,7 +22,7 @@ class HelloSpock : GivenWhenThenTest(
         )
     ),
     scenario(
-        description { "length of Spock's and his friends' names with tabular data $data" },
+        description { "length of Spock's and his friends' names with tabular data" },
 
         expect {
             that(data.name).hasLength(data.expectedLength)

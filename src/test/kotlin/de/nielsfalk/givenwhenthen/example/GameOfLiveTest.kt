@@ -9,8 +9,7 @@ import strikt.assertions.isEqualTo
 class GameOfLiveTest : GivenWhenThenTest(
     scenario(
         description {
-            "a Cell(alive=${data.wasAlive}, livingNeighbours=${data.livingNeighbours}) " +
-                    "will ${if (data.expectedToBeAliveInNextGeneration) "live" else "not live"} in next generation"
+            "a Cell will live in next generation"
         },
         given { Cell(data.wasAlive, data.livingNeighbours) },
         `when` { it.isAliveInNextGeneration },

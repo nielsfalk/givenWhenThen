@@ -9,27 +9,29 @@ class Scenario<Given, Actual, DataType>(
     val then: ThenFun<Given, Actual, DataType>,
     val where: Array<out DataType>
 ) {
-    fun dynamicTest(): List<Pair<String, () -> Unit>> =
+    fun executables(): List<TestExecutable<DataType>> =
         where.map { row ->
             val dataContext = DataContext(row)
-            dataContext.description(row) to {
-                var whenContext: WhenContext<*, *>? = null
-                var thenContext: ThenContext<*, *, *>? = null
+            dataContext.run {
+                TestExecutable(description(row), row) {
+                    var whenContext: WhenContext<*, *>? = null
+                    var thenContext: ThenContext<*, *, *>? = null
 
-                try {
-                    runBlocking {
-                        val givenValue = dataContext.given()
-                        whenContext = WhenContext(givenValue, row).apply {
-                            val actual = `when`(givenValue)
-                            thenContext = ThenContext(givenValue, actual, row).apply {
-                                then(actual)
+                    try {
+                        runBlocking {
+                            val givenValue = dataContext.given()
+                            whenContext = WhenContext(givenValue, row).apply {
+                                val actual = `when`(givenValue)
+                                thenContext = ThenContext(givenValue, actual, row).apply {
+                                    then(actual)
+                                }
                             }
                         }
+                    } finally {
+                        thenContext?.close()
+                        whenContext?.close()
+                        close()
                     }
-                } finally {
-                    thenContext?.close()
-                    whenContext?.close()
-                    dataContext.close()
                 }
             }
         }
@@ -40,7 +42,7 @@ fun <Given, Actual> scenario(
     given: GivenFun<Given, Unit>,
     `when`: WhenFun<Given, Actual, Unit>,
     then: ThenFun<Given, Actual, Unit>,
-): List<Pair<String, () -> Unit>> =
+): List<TestExecutable<Unit>> =
     Scenario(
         description,
         given,
@@ -48,7 +50,7 @@ fun <Given, Actual> scenario(
         then,
         arrayOf(Unit)
     )
-        .dynamicTest()
+        .executables()
 
 fun <Given, Actual, DataType> scenario(
     description: DescriptionFun<DataType> = { "" },
@@ -56,39 +58,45 @@ fun <Given, Actual, DataType> scenario(
     `when`: WhenFun<Given, Actual, DataType>,
     then: ThenFun<Given, Actual, DataType>,
     where: Array<out DataType>
-): List<Pair<String, () -> Unit>> =
+): List<TestExecutable<DataType>> =
     Scenario(description, given, `when`, then, where)
-        .dynamicTest()
+        .executables()
 
 fun <Actual> scenario(
     description: DescriptionFun<Unit> = { "" },
     `when`: WhenFun<Unit, Actual, Unit>,
     then: ThenFun<Unit, Actual, Unit>,
-): List<Pair<String, () -> Unit>> =
+): List<TestExecutable<Unit>> =
     Scenario(description, { }, `when`, then, arrayOf(Unit))
-        .dynamicTest()
+        .executables()
 
 fun <Actual, DataType> scenario(
     description: DescriptionFun<DataType> = { "" },
     `when`: WhenFun<Unit, Actual, DataType>,
     then: ThenFun<Unit, Actual, DataType>,
     where: Array<out DataType>
-): List<Pair<String, () -> Unit>> =
+): List<TestExecutable<DataType>> =
     Scenario(description, { }, `when`, then, where)
-        .dynamicTest()
+        .executables()
 
 fun scenario(
     description: DescriptionFun<Unit> = { "a test" },
     expect: ExpectFun<Unit>
-): List<Pair<String, () -> Unit>> =
+): List<TestExecutable<Unit>> =
     Scenario(description, { }, { }, { DataContext(data).expect(data) }, arrayOf(Unit))
-        .dynamicTest()
+        .executables()
 
 fun <DataType> scenario(
     description: DescriptionFun<DataType> = { "" },
     expect: ExpectFun<DataType>,
     where: Array<out DataType>
-): List<Pair<String, () -> Unit>> =
+): List<TestExecutable<DataType>> =
     Scenario(description, { }, { }, { DataContext(data).expect(data) }, where)
-        .dynamicTest()
+        .executables()
+
+data class TestExecutable<DataType>(
+    val description:String,
+    val data: DataType,
+    val executable: ()->Unit
+)
 

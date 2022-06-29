@@ -15,7 +15,7 @@ class BasicTest : GivenWhenThenTest(
     ),
 
     scenario(
-        description { "a Calculator calculating given numbers($it) sum is 10" },
+        description { "a Calculator calculating given numbers sum is 10" },
 
         given { Calculator() },
         `when` { calculator ->
@@ -38,7 +38,7 @@ class BasicTest : GivenWhenThenTest(
     ),
 
     scenario(
-        description { "shorter notation without given - sum of $it should be ${it.first + it.second}" },
+        description { "shorter notation without given - sum should be ${it.first + it.second}" },
         `when` {
             data.run { first + second }
         },
