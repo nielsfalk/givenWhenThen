@@ -37,21 +37,6 @@ class Scenario<Given, Actual, DataType>(
         }
 }
 
-fun <Given, Actual> scenario(
-    description: DescriptionFun<Unit> = { "" },
-    given: GivenFun<Given, Unit>,
-    `when`: WhenFun<Given, Actual, Unit>,
-    then: ThenFun<Given, Actual, Unit>,
-): List<TestExecutable<Unit>> =
-    Scenario(
-        description,
-        given,
-        `when`,
-        then,
-        arrayOf(Unit)
-    )
-        .executables()
-
 fun <Given, Actual, DataType> scenario(
     description: DescriptionFun<DataType> = { "" },
     given: GivenFun<Given, DataType>,
@@ -62,13 +47,26 @@ fun <Given, Actual, DataType> scenario(
     Scenario(description, given, `when`, then, where)
         .executables()
 
+fun <Given, Actual> scenario(
+    description: DescriptionFun<Unit> = { "" },
+    given: GivenFun<Given, Unit>,
+    `when`: WhenFun<Given, Actual, Unit>,
+    then: ThenFun<Given, Actual, Unit>,
+): List<TestExecutable<Unit>> =
+    scenario(
+        description,
+        given,
+        `when`,
+        then,
+        arrayOf(Unit)
+    )
+
 fun <Actual> scenario(
     description: DescriptionFun<Unit> = { "" },
     `when`: WhenFun<Unit, Actual, Unit>,
     then: ThenFun<Unit, Actual, Unit>,
 ): List<TestExecutable<Unit>> =
-    Scenario(description, { }, `when`, then, arrayOf(Unit))
-        .executables()
+    scenario(description, { data }, `when`, then)
 
 fun <Actual, DataType> scenario(
     description: DescriptionFun<DataType> = { "" },
@@ -76,27 +74,39 @@ fun <Actual, DataType> scenario(
     then: ThenFun<Unit, Actual, DataType>,
     where: Array<out DataType>
 ): List<TestExecutable<DataType>> =
-    Scenario(description, { }, `when`, then, where)
+    Scenario(description, { data }, `when`, then, where)
         .executables()
 
-fun scenario(
-    description: DescriptionFun<Unit> = { "a test" },
-    expect: ExpectFun<Unit>
-): List<TestExecutable<Unit>> =
-    Scenario(description, { }, { }, { DataContext(data).expect(data) }, arrayOf(Unit))
-        .executables()
+fun <Given, DataType> scenario(
+    description: DescriptionFun<DataType> = { "" },
+    given: GivenFun<Given, DataType>,
+    expect: ExpectFun<Given, DataType>,
+    where: Array<out DataType>
+): List<TestExecutable<DataType>> =
+    scenario(description, given, `when` { it }, { WhenContext(this.given, data).expect(data) }, where)
 
 fun <DataType> scenario(
     description: DescriptionFun<DataType> = { "" },
-    expect: ExpectFun<DataType>,
+    expect: ExpectFun<Unit, DataType>,
     where: Array<out DataType>
 ): List<TestExecutable<DataType>> =
-    Scenario(description, { }, { }, { DataContext(data).expect(data) }, where)
-        .executables()
+    scenario(description, { }, expect, where)
+
+fun <Given> scenario(
+    description: DescriptionFun<Unit> = { "" },
+    given: GivenFun<Given, Unit>,
+    expect: ExpectFun<Given, Unit>,
+): List<TestExecutable<Unit>> =
+    scenario(description, given,  expect, arrayOf(Unit))
+fun scenario(
+    description: DescriptionFun<Unit> = { "a test" },
+    expect: ExpectFun<Unit, Unit>
+): List<TestExecutable<Unit>> =
+    scenario(description, {}, expect)
 
 data class TestExecutable<DataType>(
-    val description:String,
+    val description: String,
     val data: DataType,
-    val executable: ()->Unit
+    val executable: () -> Unit
 )
 

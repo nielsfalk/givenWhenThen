@@ -21,7 +21,8 @@ data class ThenContext<Given, Actual, DataType>(
     fun expectActual() = expectThat(actual).describedAs("data=$data")
 }
 
-class ExpectContext<DataType>(
+class ExpectContext<Given, DataType>(
+    val given: Given,
     val data: DataType,
     expectationBuilder: ExpectationBuilder
 ) : ExpectationBuilder by expectationBuilder, AutoCloseBlock()
