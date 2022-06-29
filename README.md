@@ -58,9 +58,9 @@ The Dsl is inspired by [Spock](https://spockframework.org/).
 What makes [Spock](https://spockframework.org/) stand out from the crowd is its beautiful and highly expressive specification language.
 
 
-## Get started
+## Geting started
 
-add the folowing to your ```build.gradle.kts```
+Add the folowing to your ```build.gradle.kts```
 
 ```kotlin
 repositories {
@@ -72,6 +72,8 @@ dependencies {
     implementation("io.strikt:strikt-core:0.34.1")
 }
 ```
+
+or follow the Instructions on [jitpack](https://jitpack.io/#nielsfalk/givenWhenThen)
 
 and write your first Test
 
@@ -90,4 +92,4 @@ class FirstTest : GivenWhenThenTest(
 )
 ```
 
-[<div align="right"><img src="KotlinMascot.png" width="50%" /></div>](KotlinMascot.png)
+[<div align="right"><img src="KotlinMascot.png" width="50%" /></div>](https://kotlinlang.org/docs/kotlin-mascot.html)
