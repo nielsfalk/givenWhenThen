@@ -1,38 +1,34 @@
 package de.nielsfalk.givenwhenthen
 
-import de.nielsfalk.givenwhenthen.RockPaperScissors.*
-import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 
 class ShowcaseTest : GivenWhenThenTest(
     scenario(
-        description {
-            "expect ${data.expectedWinner} to win when ${data.first} defending ${data.second}"
-        },
-        `when` {
-            data.first defend data.second
-        },
+        description { "expect ${data.expectedWinner} to win when ${data.first} defending ${data.second}" },
+
+        `when` { data.first defend data.second },
         then {
-            expectThat(actual)
+            expectActual()
                 .isEqualTo(data.expectedWinner)
         },
-        where(
-            data(Rock, Rock, expectedWinner = null),
-            data(Rock, Scissors, expectedWinner = Rock),
-            data(Rock, Paper, expectedWinner = Paper),
-            data(Scissors, Scissors, expectedWinner = null),
-            data(Scissors, Paper, expectedWinner = Scissors),
-            data(Scissors, Rock, expectedWinner = Rock),
-            data(Paper, Paper, expectedWinner = null),
-            data(Paper, Rock, expectedWinner = Paper),
-            data(Paper, Scissors, expectedWinner = Scissors)
+        where<RockPaperScissorsTestCase>(
+            """
+            | first     | second   | expectedWinner |
+            |-----------|----------|----------------|
+            | Rock      | Rock     | null           |
+            | Rock      | Scissors | Rock           |
+            | Rock      | Paper    | Paper          |
+            | Scissors  | Scissors | null           |
+            | Scissors  | Paper    | Scissors       |
+            | Scissors  | Rock     | Rock           |
+            | Paper     | Paper    | null           |
+            | Paper     | Spock    | Spock          |
+            | Paper     | Rock     | Paper          |
+            | Paper     | Scissors | Scissors       |
+            """.trimIndent()
         )
     )
 )
-
-private fun data(first: RockPaperScissors, second: RockPaperScissors, expectedWinner: RockPaperScissors?): RockPaperScissorsTestCase {
-    return RockPaperScissorsTestCase(first, second, expectedWinner)
-}
 
 private data class RockPaperScissorsTestCase(
     val first: RockPaperScissors,
@@ -58,4 +54,3 @@ enum class RockPaperScissors {
         )
     }
 }
-

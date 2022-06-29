@@ -1,6 +1,8 @@
 package de.nielsfalk.givenwhenthen
 
+import strikt.api.DescribeableBuilder
 import strikt.api.ExpectationBuilder
+import strikt.api.expectThat
 
 data class DataContext<DataType>(
     val data: DataType
@@ -15,7 +17,9 @@ data class ThenContext<Given, Actual, DataType>(
     val given: Given,
     val actual: Actual,
     val data: DataType
-) : AutoCloseBlock()
+) : AutoCloseBlock(), DescribeableBuilder<Actual> by expectThat(actual) {
+    fun expectActual() = expectThat(actual)
+}
 
 class ExpectContext<DataType>(
     val data: DataType,
