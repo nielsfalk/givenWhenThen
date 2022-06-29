@@ -34,11 +34,7 @@ private data class RockPaperScissorsTestCase(
     val first: RockPaperScissors,
     val second: RockPaperScissors,
     val expectedWinner: RockPaperScissors?
-){
-    override fun toString(): String {
-        return "first=$first, second=$second, expectedWinner=$expectedWinner"
-    }
-}
+)
 
 enum class RockPaperScissors {
     Rock, Paper, Scissors;

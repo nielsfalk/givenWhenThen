@@ -18,10 +18,7 @@ abstract class GivenWhenThenTest(
         return groups.flatMapIndexed { groupIndex, (name, tests) ->
             val dynamicTests = tests.mapIndexed { index, test ->
                 dynamicTest(
-                    name = when {
-                        test.data == Unit -> test.description
-                        else -> test.data.toString()
-                    },
+                    name = if (test.data == Unit) test.description else test.data.shortenedToString(),
                     beforeAllAutoClose = beforeAllAutoClose,
                     test = test,
                     isFirst = index == 0 && groupIndex == 0,
@@ -35,6 +32,15 @@ abstract class GivenWhenThenTest(
             }
         }
     }
+
+    private fun Any?.shortenedToString(): String =
+        this?.toString()?.let {
+            val prefix = "${this@shortenedToString::class.simpleName}("
+            if (it.startsWith(prefix))
+                it.removePrefix(prefix)
+                    .removeSuffix(")")
+            else null
+        } ?: toString()
 
     private fun dynamicTest(beforeAllAutoClose: AutoCloseBlock, test: TestExecutable<*>, name: String = test.description, isFirst: Boolean, isLast: Boolean) =
         DynamicTest.dynamicTest(name) {
