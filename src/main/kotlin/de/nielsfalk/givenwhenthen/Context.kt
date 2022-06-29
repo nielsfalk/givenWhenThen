@@ -18,7 +18,7 @@ data class ThenContext<Given, Actual, DataType>(
     val actual: Actual,
     val data: DataType
 ) : AutoCloseBlock(), DescribeableBuilder<Actual> by expectThat(actual) {
-    fun expectActual() = expectThat(actual)
+    fun expectActual() = expectThat(actual).describedAs("data=$data")
 }
 
 class ExpectContext<DataType>(

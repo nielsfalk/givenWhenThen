@@ -1,5 +1,6 @@
-package de.nielsfalk.givenwhenthen
+package de.nielsfalk.givenwhenthen.example
 
+import de.nielsfalk.givenwhenthen.*
 import strikt.assertions.isEqualTo
 
 class ShowcaseTest : GivenWhenThenTest(
@@ -22,7 +23,6 @@ class ShowcaseTest : GivenWhenThenTest(
             | Scissors  | Paper    | Scissors       |
             | Scissors  | Rock     | Rock           |
             | Paper     | Paper    | null           |
-            | Paper     | Spock    | Spock          |
             | Paper     | Rock     | Paper          |
             | Paper     | Scissors | Scissors       |
             """.trimIndent()

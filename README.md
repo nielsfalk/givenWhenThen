@@ -43,9 +43,9 @@ private data class RockPaperScissorsTestCase(
 )
 ```
 
-Or even cooler, when the markdown-table is syntax-highlighted by IntelliJ
+Or even [cooler](screenshotShowcase.png), when the markdown-table is syntax-highlighted by IntelliJ
 
-[ShowcaseTest.kt](https://raw.githubusercontent.com/nielsfalk/givenWhenThen/master/src/test/kotlin/de/nielsfalk/givenwhenthen/ShowcaseTest.kt)
+[ShowcaseTest.kt](https://raw.githubusercontent.com/nielsfalk/givenWhenThen/master/src/test/kotlin/de/nielsfalk/givenwhenthen/example/ShowcaseTest.kt)
 
 
 ## Dsl

@@ -3,7 +3,7 @@ package de.nielsfalk.givenwhenthen
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 
-class DemoTest : GivenWhenThenTest(
+class BasicTest : GivenWhenThenTest(
     scenario(
         description { "a Calculator sqrt 2" },
 
