@@ -92,3 +92,31 @@ class FirstTest : GivenWhenThenTest(
 ```
 
 [<div align="right"><img src="KotlinMascot.png" width="50%" /></div>](https://kotlinlang.org/docs/kotlin-mascot.html)
+
+## Power-Assertions
+
+The [Spockframework](https://spockframework.org/) is also known for its Power-Assertions.
+
+When a Power-Assertion like this ...
+```
+expect {
+    data.run { assert(first defend second != expectedWinner) }
+}
+```
+... fails, you get the following error message:
+
+```
+Assertion failed
+assert(first defend second != expectedWinner)
+       |     |      |      |  |
+       |     |      |      |  null
+       |     |      |      |  RockPaperScissorsTestCase(first=Rock, second=Rock, expectedWinner=null)
+       |     |      |      false
+       |     |      Rock
+       |     |      RockPaperScissorsTestCase(first=Rock, second=Rock, expectedWinner=null)
+       |     null
+       Rock
+       RockPaperScissorsTestCase(first=Rock, second=Rock, expectedWinner=null)
+```
+
+Power-Assertions can be achieved by setting up [kotlin-power-assert](https://github.com/bnorm/kotlin-power-assert) in your project.
