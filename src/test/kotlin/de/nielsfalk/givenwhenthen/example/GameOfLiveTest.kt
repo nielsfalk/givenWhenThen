@@ -17,32 +17,31 @@ class GameOfLiveTest : GivenWhenThenTest(
             expectActual()
                 .isEqualTo(data.expectedToBeAliveInNextGeneration)
         },
-        where<GameOfLiveTestCase>(
-            """
-            | is alive | neighbours alive | expected to be alive in next generation |
-            |----------|------------------|-----------------------------------------|
-            | false    | 0                | false                                   |
-            | false    | 1                | false                                   |
-            | false    | 2                | false                                   |
-            | false    | 3                | true                                    |
-            | false    | 4                | false                                   |
-            | false    | 5                | false                                   |
-            | false    | 6                | false                                   |
-            | false    | 7                | false                                   |
-            | false    | 8                | false                                   |
-            | false    | 9                | false                                   |
-            | true     | 0                | false                                   |
-            | true     | 1                | false                                   |
-            | true     | 2                | true                                    |
-            | true     | 3                | true                                    |
-            | true     | 4                | false                                   |
-            | true     | 5                | false                                   |
-            | true     | 6                | false                                   |
-            | true     | 7                | false                                   |
-            | true     | 8                | false                                   |
-            | true     | 9                | false                                   |
-            """.trimIndent()
-        )
+        where<GameOfLiveTestCase> {
+            // @formatter:off
+            //  is alive ǀ neighbours alive ǀǀ expected to be alive in next generation
+                false    ǀ 0                ǀǀ  false
+                false    ǀ 1                ǀǀ  false
+                false    ǀ 2                ǀǀ  false
+                false    ǀ 3                ǀǀ  true
+                false    ǀ 4                ǀǀ  false
+                false    ǀ 5                ǀǀ  false
+                false    ǀ 6                ǀǀ  false
+                false    ǀ 7                ǀǀ  false
+                false    ǀ 8                ǀǀ  false
+                false    ǀ 9                ǀǀ  false
+                true     ǀ 0                ǀǀ  false
+                true     ǀ 1                ǀǀ  false
+                true     ǀ 2                ǀǀ  true
+                true     ǀ 3                ǀǀ  true
+                true     ǀ 4                ǀǀ  false
+                true     ǀ 5                ǀǀ  false
+                true     ǀ 6                ǀǀ  false
+                true     ǀ 7                ǀǀ  false
+                true     ǀ 8                ǀǀ  false
+                true     ǀ 9                ǀǀ  false
+            // @formatter:on
+        }
     )
 )
 

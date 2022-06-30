@@ -9,33 +9,16 @@ import strikt.assertions.hasLength
 * */
 class HelloSpock : GivenWhenThenTest(
     scenario(
-        description { "length of Spock's and his friends' names" },
-
-        expect {
-            val (name, expectedLength) = data
-            that(name).hasLength(expectedLength)
-        },
-        where(
-            "Spock" to 5,
-            "Kirk" to 4,
-            "Scotty" to 6,
-        )
-    ),
-    scenario(
-        description { "length of Spock's and his friends' names with tabular data" },
+        description { "length of Spock's and his friends names" },
 
         expect {
             that(data.name).hasLength(data.expectedLength)
         },
-        where<HelloSpockTestCase>(
-            """
-                | name   | expected length |
-                |--------|-----------------|
-                | Spock  | 5               |
-                | Kirk   | 4               |
-                | Scotty | 6               |
-            """.trimIndent()
-        )
+        where<HelloSpockTestCase> {
+            "Spock"  ǀ 5
+            "Kirk"   ǀ 4
+            "Scotty" ǀ 6
+        }
     )
 )
 

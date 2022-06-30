@@ -3,7 +3,7 @@
 [![](https://jitpack.io/v/nielsfalk/givenWhenThen.svg)](https://jitpack.io/#nielsfalk/givenWhenThen)
 
 
-provides [Spock](https://spockframework.org/)syntax in [Kotlin](https://kotlinlang.org/) with [JUnit](https://junit.org/junit5/), [Strikt](https://strikt.io/)-assertions and testdata defined in markdown.
+provides [Spock](https://spockframework.org/)syntax with tabular testdata in [Kotlin](https://kotlinlang.org/) with [JUnit](https://junit.org/junit5/) and [Strikt](https://strikt.io/)-assertions.
 
 
 ## Example
@@ -23,15 +23,15 @@ class ShowcaseTest : GivenWhenThenTest(
         },
         where<RockPaperScissorsTestCase> {
             // @formatter:off
-            Rock     ǀ Rock     ǀ null
-            Rock     ǀ Scissors ǀ Rock
-            Rock     ǀ Paper    ǀ Paper
-            Scissors ǀ Scissors ǀ null
-            Scissors ǀ Paper    ǀ Scissors
-            Scissors ǀ Rock     ǀ Rock
-            Paper    ǀ Paper    ǀ null
-            Paper    ǀ Rock     ǀ Paper
-            Paper    ǀ Scissors ǀ Scissors
+            Rock     ǀ Rock     ǀǀ null
+            Rock     ǀ Scissors ǀǀ Rock
+            Rock     ǀ Paper    ǀǀ Paper
+            Scissors ǀ Scissors ǀǀ null
+            Scissors ǀ Paper    ǀǀ Scissors
+            Scissors ǀ Rock     ǀǀ Rock
+            Paper    ǀ Paper    ǀǀ null
+            Paper    ǀ Rock     ǀǀ Paper
+            Paper    ǀ Scissors ǀǀ Scissors
             // @formatter:on
         }
     )
