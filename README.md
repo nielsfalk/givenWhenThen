@@ -68,7 +68,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("com.github.nielsfalk:givenWhenThen:0.1.1")
+    testImplementation("com.github.nielsfalk:givenWhenThen:0+")
     implementation("io.strikt:strikt-core:0.34.1")
 }
 ```

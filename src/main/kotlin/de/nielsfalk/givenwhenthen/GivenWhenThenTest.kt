@@ -44,18 +44,41 @@ abstract class GivenWhenThenTest(
 
     private fun dynamicTest(beforeAllAutoClose: AutoCloseBlock, test: TestExecutable<*>, name: String = test.description, isFirst: Boolean, isLast: Boolean) =
         DynamicTest.dynamicTest(name) {
-            if (isFirst) {
-                beforeAll?.invoke(beforeAllAutoClose)
-            }
-            val beforeEachAutoClose = AutoCloseBlock()
-            beforeEach?.invoke(beforeEachAutoClose)
-            test.executable()
-            afterEach?.invoke()
-            beforeEachAutoClose.close()
 
-            if (isLast) {
-                afterAll?.invoke()
-                beforeAllAutoClose.close()
+            CollectExceptions {
+                collectException {
+                    if (isFirst) {
+                        beforeAll?.invoke(beforeAllAutoClose)
+                    }
+                    val beforeEachAutoClose = AutoCloseBlock()
+                    collectException {
+                        beforeEach?.invoke(beforeEachAutoClose)
+                        collectException {
+                            test.executable()
+                        }
+                    }
+                    collectException {
+                        afterEach?.invoke()
+                    }
+                    beforeEachAutoClose.close()
+                }
+
+                if (isLast) {
+                    collectException {
+                        afterAll?.invoke()
+                    }
+                    beforeAllAutoClose.close()
+                }
+                handleExceptions {
+                    throw TestExecutionException(name, exceptions)
+                }
             }
+
         }
 }
+
+class TestExecutionException(
+    name: String,
+    val exceptions: List<Exception>
+) :
+    Exception("$name should not have exceptions but had $exceptions", exceptions.first())

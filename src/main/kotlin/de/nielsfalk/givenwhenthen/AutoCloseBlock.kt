@@ -13,6 +13,8 @@ open class AutoCloseBlock {
     }
 
     fun close(){
-        closables.forEach {it()}
+        closables.forEach {
+            justLogExceptions({"autoclose $it"}){ it()}
+        }
     }
 }

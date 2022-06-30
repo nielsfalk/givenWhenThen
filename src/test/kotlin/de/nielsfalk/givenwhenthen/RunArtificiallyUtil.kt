@@ -12,7 +12,7 @@ fun runArtificially(
     afterEach: (() -> Unit)? = null,
     beforeAll: (AutoCloseBlock.() -> Unit)? = null,
     afterAll: (() -> Unit)? = null
-) {
+): ArtificiallyRunResult =
     object : GivenWhenThenTest(
         *scenario,
         beforeEach = beforeEach,
@@ -20,20 +20,28 @@ fun runArtificially(
         beforeAll = beforeAll,
         afterAll = afterAll
     ) {
-        fun runArtificially() {
-            val tests = givenWhenThenTests()
-            tests.forEach {
-                it.execute()
+        fun runArtificially(): ArtificiallyRunResult =
+            try {
+                val tests = givenWhenThenTests()
+                tests.forEach {
+                    it.execute()
+                }
+                logger.info { "artificially executed $tests" }
+                ArtificiallyRunResult()
+            } catch (e: TestExecutionException) {
+                ArtificiallyRunResult(e.exceptions)
             }
-            logger.info { "artificially executed $tests" }
-        }
     }.runArtificially()
+
+data class ArtificiallyRunResult(val exceptions: List<Exception>? = null) {
+    fun isSuccess() = exceptions.isNullOrEmpty()
+    fun isFailure() = !isSuccess()
 }
 
 private fun DynamicNode.execute() {
-    when(this) {
-        is DynamicTest-> executable.execute()
-        is DynamicContainer->{
+    when (this) {
+        is DynamicTest -> executable.execute()
+        is DynamicContainer -> {
             children.forEach { it.execute() }
         }
     }
