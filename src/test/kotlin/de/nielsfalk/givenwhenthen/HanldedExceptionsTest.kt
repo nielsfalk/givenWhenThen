@@ -4,7 +4,7 @@ import strikt.api.expectThat
 import strikt.assertions.isFalse
 import strikt.assertions.isTrue
 
-class HanldedExcetionsTest : GivenWhenThenTest(
+class HanldedExceptionsTest : GivenWhenThenTest(
     scenario(
         description { "throw in beforeAll" },
         `when` {

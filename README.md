@@ -13,28 +13,27 @@ A Dsl is provided so Testcode can look like this
 ```kotlin
 class ShowcaseTest : GivenWhenThenTest(
     scenario(
-        description { "Rock Paper Scissors expectedWinner=${data.expectedWinner}" },
-
+        description {
+            "Rock Paper Scissors expectedWinner=${data.expectedWinner}"
+        },
         `when` { data.first defend data.second },
         then {
             expectActual()
                 .isEqualTo(data.expectedWinner)
         },
-        where<RockPaperScissorsTestCase>(
-            """
-            | first     | second   | expectedWinner |
-            |-----------|----------|----------------|
-            | Rock      | Rock     | null           |
-            | Rock      | Scissors | Rock           |
-            | Rock      | Paper    | Paper          |
-            | Scissors  | Scissors | null           |
-            | Scissors  | Paper    | Scissors       |
-            | Scissors  | Rock     | Rock           |
-            | Paper     | Paper    | null           |
-            | Paper     | Rock     | Paper          |
-            | Paper     | Scissors | Scissors       |
-            """.trimIndent()
-        )
+        where<RockPaperScissorsTestCase> {
+            // @formatter:off
+            Rock     ǀ Rock     ǀ null
+            Rock     ǀ Scissors ǀ Rock
+            Rock     ǀ Paper    ǀ Paper
+            Scissors ǀ Scissors ǀ null
+            Scissors ǀ Paper    ǀ Scissors
+            Scissors ǀ Rock     ǀ Rock
+            Paper    ǀ Paper    ǀ null
+            Paper    ǀ Rock     ǀ Paper
+            Paper    ǀ Scissors ǀ Scissors
+            // @formatter:on
+        }
     )
 )
 
@@ -45,7 +44,7 @@ private data class RockPaperScissorsTestCase(
 )
 ```
 
-It looks even cooler, when the markdown-table is syntax-highlighted by IntelliJ
+It looks even cooler in IntelliJ
 
 ![IntelliJ screenshot](screenshotShowcase.png "Title")
 
@@ -58,9 +57,9 @@ The Dsl is inspired by [Spock](https://spockframework.org/).
 What makes [Spock](https://spockframework.org/) stand out from the crowd is its beautiful and highly expressive specification language.
 
 
-## Geting started
+## Getting started
 
-Add the folowing to your ```build.gradle.kts```
+Add the following to your ```build.gradle.kts```
 
 ```kotlin
 repositories {

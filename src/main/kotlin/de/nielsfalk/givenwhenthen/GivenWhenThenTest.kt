@@ -14,7 +14,7 @@ abstract class GivenWhenThenTest(
     @DisplayName("cases")
     fun givenWhenThenTests(): List<DynamicNode> {
         val beforeAllAutoClose = AutoCloseBlock()
-        val groups = scenarios.flatMap { it }.groupBy { it.description }.toList()
+        val groups = scenarios.flatten().groupBy { it.description }.toList()
         return groups.flatMapIndexed { groupIndex, (name, tests) ->
             val dynamicTests = tests.mapIndexed { index, test ->
                 dynamicTest(

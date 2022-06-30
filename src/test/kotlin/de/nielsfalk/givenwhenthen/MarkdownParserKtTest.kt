@@ -19,7 +19,7 @@ class MarkdownParserKtTest : GivenWhenThenTest(
             markdown
         },
         `when` {
-            readMd<TestData>(it)
+            readMd(it)
         },
         then {
             expectActual()

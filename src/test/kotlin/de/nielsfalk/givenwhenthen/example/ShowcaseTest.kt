@@ -1,32 +1,32 @@
 package de.nielsfalk.givenwhenthen.example
 
 import de.nielsfalk.givenwhenthen.*
+import de.nielsfalk.givenwhenthen.example.RockPaperScissors.*
 import strikt.assertions.isEqualTo
 
 class ShowcaseTest : GivenWhenThenTest(
     scenario(
-        description { "Rock Paper Scissors expectedWinner=${data.expectedWinner}" },
-
+        description {
+            "Rock Paper Scissors expectedWinner=${data.expectedWinner}"
+        },
         `when` { data.first defend data.second },
         then {
             expectActual()
                 .isEqualTo(data.expectedWinner)
         },
-        where<RockPaperScissorsTestCase>(
-            """
-            | first     | second   | expectedWinner |
-            |-----------|----------|----------------|
-            | Rock      | Rock     | null           |
-            | Rock      | Scissors | Rock           |
-            | Rock      | Paper    | Paper          |
-            | Scissors  | Scissors | null           |
-            | Scissors  | Paper    | Scissors       |
-            | Scissors  | Rock     | Rock           |
-            | Paper     | Paper    | null           |
-            | Paper     | Rock     | Paper          |
-            | Paper     | Scissors | Scissors       |
-            """.trimIndent()
-        )
+        where<RockPaperScissorsTestCase> {
+            // @formatter:off
+            Rock     ǀ Rock     ǀ null
+            Rock     ǀ Scissors ǀ Rock
+            Rock     ǀ Paper    ǀ Paper
+            Scissors ǀ Scissors ǀ null
+            Scissors ǀ Paper    ǀ Scissors
+            Scissors ǀ Rock     ǀ Rock
+            Paper    ǀ Paper    ǀ null
+            Paper    ǀ Rock     ǀ Paper
+            Paper    ǀ Scissors ǀ Scissors
+            // @formatter:on
+        }
     )
 )
 
