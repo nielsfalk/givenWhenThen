@@ -1,7 +1,8 @@
 plugins {
-    kotlin("jvm") version "1.6.20"
+    kotlin("jvm") version "1.7.0"
     application
     `maven-publish`
+    id("com.adarshr.test-logger").version("3.2.0")
 }
 
 group = "de.nielsfalk"
@@ -35,7 +36,6 @@ publishing {
             groupId = "de.nielsfalk"
             artifactId = "color-console"
             version = "1.0"
-
             from(components["java"])
         }
     }
