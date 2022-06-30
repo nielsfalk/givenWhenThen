@@ -28,6 +28,11 @@ class TabularDataBuilder {
     } else RowBuilder(firstCell = this, nextCell).also {
         rowBuilders += it
     }
+
+    /*
+    * Input- and expectation-data can be seperated by using ǀǀ */
+    @Suppress("FunctionName", "NonAsciiCharacters")
+    infix fun Any?.ǀǀ(nextCell: Any?): RowBuilder = this ǀ nextCell
 }
 
 class RowBuilder(firstCell: Any?, secondCell: Any?) {

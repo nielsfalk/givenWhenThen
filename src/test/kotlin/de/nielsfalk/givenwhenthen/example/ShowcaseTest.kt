@@ -16,15 +16,15 @@ class ShowcaseTest : GivenWhenThenTest(
         },
         where<RockPaperScissorsTestCase> {
             // @formatter:off
-            Rock     ǀ Rock     ǀ null
-            Rock     ǀ Scissors ǀ Rock
-            Rock     ǀ Paper    ǀ Paper
-            Scissors ǀ Scissors ǀ null
-            Scissors ǀ Paper    ǀ Scissors
-            Scissors ǀ Rock     ǀ Rock
-            Paper    ǀ Paper    ǀ null
-            Paper    ǀ Rock     ǀ Paper
-            Paper    ǀ Scissors ǀ Scissors
+            Rock     ǀ Rock     ǀǀ null
+            Rock     ǀ Scissors ǀǀ Rock
+            Rock     ǀ Paper    ǀǀ Paper
+            Scissors ǀ Scissors ǀǀ null
+            Scissors ǀ Paper    ǀǀ Scissors
+            Scissors ǀ Rock     ǀǀ Rock
+            Paper    ǀ Paper    ǀǀ null
+            Paper    ǀ Rock     ǀǀ Paper
+            Paper    ǀ Scissors ǀǀ Scissors
             // @formatter:on
         }
     )
