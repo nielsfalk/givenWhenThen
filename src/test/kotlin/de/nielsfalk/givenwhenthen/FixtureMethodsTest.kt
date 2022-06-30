@@ -1,6 +1,5 @@
 package de.nielsfalk.givenwhenthen
 
-import org.junit.jupiter.api.AfterEach
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 
@@ -11,23 +10,26 @@ class FixtureMethodsTest : GivenWhenThenTest() {
     var afterAllCount = 0
 
     init {
-        scenarios += scenario { println() }
-        scenarios += scenario { println() }
-        scenarios += scenario(description { "fixture methods are called" },
-            expect {
-                that(beforeEachCount).isEqualTo(3)
-                that(afterEachCount).isEqualTo(2)
-                that(beforeAllCount).isEqualTo(1)
-                that(afterAllCount).isEqualTo(0) // not yet called
-            })
-        beforeEach = { beforeEachCount++ }
-        afterEach = { afterEachCount++ }
-        beforeAll = { beforeAllCount++ }
-        afterAll = { afterAllCount++ }
-    }
+        scenarios += scenario(
+            description { "fixture methods are called" },
 
-    @AfterEach
-    fun tearDown() {
-        expectThat(afterAllCount).isEqualTo(1)
+            `when` {
+                runArtificially(
+                    scenario { },
+                    scenario { },
+                    scenario(description { "fixture methods are called" }) {},
+                    beforeEach = { beforeEachCount++ },
+                    afterEach = { afterEachCount++ },
+                    beforeAll = { beforeAllCount++ },
+                    afterAll = { afterAllCount++ }
+                )
+            },
+            then {
+                expectThat(beforeEachCount).isEqualTo(3)
+                expectThat(afterEachCount).isEqualTo(3)
+                expectThat(beforeAllCount).isEqualTo(1)
+                expectThat(afterAllCount).isEqualTo(1)
+            }
+        )
     }
 }
