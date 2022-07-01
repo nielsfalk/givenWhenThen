@@ -1,8 +1,11 @@
+import com.bnorm.power.PowerAssertGradleExtension
+
 plugins {
-    kotlin("jvm") version "1.7.0"
+    kotlin("jvm") version "1.6.21"
     application
     `maven-publish`
     id("com.adarshr.test-logger").version("3.2.0")
+    id("com.bnorm.power.kotlin-power-assert") version "0.11.0"
 }
 
 group = "de.nielsfalk"
@@ -28,6 +31,17 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+configure<PowerAssertGradleExtension> {
+    functions = listOf(
+        "kotlin.assert",
+        "kotlin.test.assertTrue",
+        "kotlin.require",
+        "com.bnorm.power.AssertScope.assert",
+        "com.bnorm.power.assert",
+        "com.bnorm.power.dbg"
+    )
 }
 
 publishing {
