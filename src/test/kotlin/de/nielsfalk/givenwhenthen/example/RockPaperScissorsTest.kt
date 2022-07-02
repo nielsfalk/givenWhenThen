@@ -4,7 +4,7 @@ import de.nielsfalk.givenwhenthen.*
 import de.nielsfalk.givenwhenthen.example.RockPaperScissors.*
 import strikt.assertions.isEqualTo
 
-class ShowcaseTest : GivenWhenThenTest(
+class RockPaperScissorsTest : GivenWhenThenTest(
     scenario(
         description {
             "Rock Paper Scissors expectedWinner=${data.expectedWinner}"

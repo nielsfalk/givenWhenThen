@@ -42,7 +42,13 @@ abstract class GivenWhenThenTest(
             else null
         } ?: toString()
 
-    private fun dynamicTest(beforeAllAutoClose: AutoCloseBlock, test: TestExecutable<*>, name: String = test.description, isFirst: Boolean, isLast: Boolean) =
+    private fun dynamicTest(
+        beforeAllAutoClose: AutoCloseBlock,
+        test: TestExecutable<*>,
+        name: String = test.description,
+        isFirst: Boolean,
+        isLast: Boolean
+    ) =
         DynamicTest.dynamicTest(name) {
             CollectExceptions {
                 collectException {
@@ -72,7 +78,6 @@ abstract class GivenWhenThenTest(
                     throw TestExecutionException(name, exceptions)
                 }
             }
-
         }
 }
 

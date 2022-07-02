@@ -11,7 +11,7 @@ provides [Spock](https://spockframework.org/)syntax with tabular testdata in [Ko
 A Dsl is provided so Testcode can look like this
 
 ```kotlin
-class ShowcaseTest : GivenWhenThenTest(
+class RockPaperScissorsTest : GivenWhenThenTest(
     scenario(
         description {
             "Rock Paper Scissors expectedWinner=${data.expectedWinner}"

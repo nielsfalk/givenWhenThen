@@ -1,13 +1,10 @@
 package de.nielsfalk.givenwhenthen
 
 import strikt.api.expectThat
-import strikt.assertions.isEqualTo
+import strikt.assertions.containsExactly
 
 class FixtureMethodsTest : GivenWhenThenTest() {
-    var beforeEachCount = 0
-    var afterEachCount = 0
-    var beforeAllCount = 0
-    var afterAllCount = 0
+    val recordedFixtureMethodCalls = mutableListOf<String>()
 
     init {
         scenarios += scenario(
@@ -17,18 +14,21 @@ class FixtureMethodsTest : GivenWhenThenTest() {
                 runArtificially(
                     scenario { },
                     scenario { },
-                    scenario(description { "fixture methods are called" }) {},
-                    beforeEach = { beforeEachCount++ },
-                    afterEach = { afterEachCount++ },
-                    beforeAll = { beforeAllCount++ },
-                    afterAll = { afterAllCount++ }
+                    beforeEach = { recordedFixtureMethodCalls += "beforeEach" },
+                    afterEach = { recordedFixtureMethodCalls += "afterEach" },
+                    beforeAll = { recordedFixtureMethodCalls += "beforeAll" },
+                    afterAll = { recordedFixtureMethodCalls += "afterAll" }
                 )
             },
             then {
-                expectThat(beforeEachCount).isEqualTo(3)
-                expectThat(afterEachCount).isEqualTo(3)
-                expectThat(beforeAllCount).isEqualTo(1)
-                expectThat(afterAllCount).isEqualTo(1)
+                expectThat(recordedFixtureMethodCalls).containsExactly(
+                    "beforeAll",
+                    "beforeEach",
+                    "afterEach",
+                    "beforeEach",
+                    "afterEach",
+                    "afterAll"
+                )
             }
         )
     }
