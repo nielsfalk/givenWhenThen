@@ -1,5 +1,8 @@
 package de.nielsfalk.givenwhenthen
 
+import de.nielsfalk.kotlintabulardata.readMarkdown
+import org.intellij.lang.annotations.Language
+
 typealias DescriptionFun<DataType> = DataContext<DataType>.(DataType) -> String
 typealias GivenFun<Given, DataType> = suspend DataContext<DataType>.() -> Given
 typealias WhenFun<Given, Actual, DataType> = suspend WhenContext<Given, DataType>.(Given) -> Actual
@@ -18,4 +21,14 @@ fun <Given, DataType> expect(function: StriktExpectFun<Given, DataType>): Expect
     }
 }
 
-fun <DataType> where(vararg data: DataType): Array<out DataType> = data
+fun <DataType> where(vararg data: DataType): List<DataType> = listOf(*data)
+
+inline fun <reified DataType> where(
+    @Language("Markdown") markdown: String
+): List<DataType> =
+    readMarkdown(markdown)
+
+inline fun <reified DataType> where(
+    function: TabularDataBuilder.() -> Unit
+): List<DataType> =
+    readTabularData(function)
