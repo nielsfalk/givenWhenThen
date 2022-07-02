@@ -44,7 +44,6 @@ abstract class GivenWhenThenTest(
 
     private fun dynamicTest(beforeAllAutoClose: AutoCloseBlock, test: TestExecutable<*>, name: String = test.description, isFirst: Boolean, isLast: Boolean) =
         DynamicTest.dynamicTest(name) {
-
             CollectExceptions {
                 collectException {
                     if (isFirst) {
@@ -54,20 +53,20 @@ abstract class GivenWhenThenTest(
                     collectException {
                         beforeEach?.invoke(beforeEachAutoClose)
                         collectException {
-                            test.executable()
+                            test.executable(this)
                         }
                     }
                     collectException {
                         afterEach?.invoke()
                     }
-                    beforeEachAutoClose.close()
+                    beforeEachAutoClose.close(this)
                 }
 
                 if (isLast) {
                     collectException {
                         afterAll?.invoke()
                     }
-                    beforeAllAutoClose.close()
+                    beforeAllAutoClose.close(this)
                 }
                 handleExceptions {
                     throw TestExecutionException(name, exceptions)

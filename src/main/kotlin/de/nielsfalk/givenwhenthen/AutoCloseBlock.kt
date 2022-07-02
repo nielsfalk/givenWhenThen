@@ -12,9 +12,9 @@ open class AutoCloseBlock {
         closables += { it.function()}
     }
 
-    fun close(){
+    fun close(collectExceptions: CollectExceptions) {
         closables.forEach {
-            justLogExceptions({"autoclose $it"}){ it()}
+            collectExceptions.collectException { it() }
         }
     }
 }

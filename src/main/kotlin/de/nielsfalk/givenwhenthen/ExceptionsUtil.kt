@@ -1,17 +1,5 @@
 package de.nielsfalk.givenwhenthen
 
-import mu.KotlinLogging
-
-private val logger = KotlinLogging.logger {}
-
-fun <T> justLogExceptions(action: () -> Any?, function: () -> T): Exception? = try {
-    function()
-    null
-} catch (e: Exception) {
-    logger.error(e) { "${action()} failed" }
-    e
-}
-
 class CollectExceptions(
     function: CollectExceptions.() -> Unit
 ) {

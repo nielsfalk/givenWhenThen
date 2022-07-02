@@ -28,9 +28,9 @@ class Scenario<Given, Actual, DataType>(
                             }
                         }
                     } finally {
-                        thenContext?.close()
-                        whenContext?.close()
-                        close()
+                        thenContext?.close(it)
+                        whenContext?.close(it)
+                        close(it)
                     }
                 }
             }
@@ -107,6 +107,6 @@ fun scenario(
 data class TestExecutable<DataType>(
     val description: String,
     val data: DataType,
-    val executable: () -> Unit
+    val executable: (CollectExceptions) -> Unit
 )
 
