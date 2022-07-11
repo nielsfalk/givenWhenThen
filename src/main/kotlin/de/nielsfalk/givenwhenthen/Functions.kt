@@ -1,6 +1,8 @@
 package de.nielsfalk.givenwhenthen
 
+import de.nielsfalk.kotlintabulardata.TabularDataBuilder
 import de.nielsfalk.kotlintabulardata.readMarkdown
+import de.nielsfalk.kotlintabulardata.readTabularData
 import org.intellij.lang.annotations.Language
 
 typealias DescriptionFun<DataType> = DataContext<DataType>.(DataType) -> String

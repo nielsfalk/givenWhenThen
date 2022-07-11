@@ -17,7 +17,7 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation("io.strikt:strikt-core:0.34.1")
     implementation("org.junit.jupiter:junit-jupiter:5.8.1")
-    implementation("com.github.nielsfalk:kotlinTabularData:0+")
+    implementation("com.github.nielsfalk:kotlinTabularData:0.1.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.16")
 
