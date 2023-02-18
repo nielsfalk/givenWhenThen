@@ -1,14 +1,15 @@
 package de.nielsfalk.givenwhenthen
 
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 
 abstract class GivenWhenThenTest(
     vararg scenario: List<TestExecutable<*>>,
     protected val scenarios: MutableList<List<TestExecutable<*>>> = mutableListOf(*scenario),
-    protected var beforeEach: (AutoCloseBlock.() -> Unit)? = null,
-    protected var afterEach: (() -> Unit)? = null,
-    protected var beforeAll: (AutoCloseBlock.() -> Unit)? = null,
-    protected var afterAll: (() -> Unit)? = null,
+    protected var beforeEach: (suspend AutoCloseBlock.() -> Unit)? = null,
+    protected var afterEach: (suspend () -> Unit)? = null,
+    protected var beforeAll: (suspend AutoCloseBlock.() -> Unit)? = null,
+    protected var afterAll: (suspend () -> Unit)? = null,
 ) {
     @TestFactory
     @DisplayName("cases")
@@ -53,24 +54,25 @@ abstract class GivenWhenThenTest(
             CollectExceptions {
                 collectException {
                     if (isFirst) {
-                        beforeAll?.invoke(beforeAllAutoClose)
+                        beforeAll?.invokeBlocking(beforeAllAutoClose)
                     }
                     val beforeEachAutoClose = AutoCloseBlock()
                     collectException {
-                        beforeEach?.invoke(beforeEachAutoClose)
+                        beforeEach?.invokeBlocking(beforeEachAutoClose)
+
                         collectException {
                             test.executable(this)
                         }
                     }
                     collectException {
-                        afterEach?.invoke()
+                        afterEach?.invokeBlocking()
                     }
                     beforeEachAutoClose.close(this)
                 }
 
                 if (isLast) {
                     collectException {
-                        afterAll?.invoke()
+                        afterAll?.invokeBlocking()
                     }
                     beforeAllAutoClose.close(this)
                 }
@@ -79,6 +81,13 @@ abstract class GivenWhenThenTest(
                 }
             }
         }
+}
+
+private fun  (suspend () -> Unit).invokeBlocking() {
+    runBlocking { this@invokeBlocking() }
+}
+private fun (suspend AutoCloseBlock.() -> Unit).invokeBlocking(beforeEachAutoClose: AutoCloseBlock) {
+    runBlocking { this@invokeBlocking(beforeEachAutoClose) }
 }
 
 class TestExecutionException(

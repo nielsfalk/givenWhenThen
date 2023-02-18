@@ -8,10 +8,10 @@ import org.junit.jupiter.api.DynamicTest
 private val logger = KotlinLogging.logger {}
 fun runArtificially(
     vararg scenario: List<TestExecutable<*>>,
-    beforeEach: (AutoCloseBlock.() -> Unit)? = null,
-    afterEach: (() -> Unit)? = null,
-    beforeAll: (AutoCloseBlock.() -> Unit)? = null,
-    afterAll: (() -> Unit)? = null
+    beforeEach: (suspend AutoCloseBlock.() -> Unit)? = null,
+    afterEach: (suspend () -> Unit)? = null,
+    beforeAll: (suspend AutoCloseBlock.() -> Unit)? = null,
+    afterAll: (suspend () -> Unit)? = null
 ): ArtificiallyRunResult =
     object : GivenWhenThenTest(
         *scenario,
